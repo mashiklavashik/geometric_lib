@@ -6,12 +6,23 @@ on:
       - cicd_409162
 
 jobs:
-  test:
-    runs-on: ${{ matrix.os }}
+  test_ubuntu:
+    runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+
+      - name: AutoTests
+        run: python -m unittest discover tests/unit
+
+  test_windows:
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
